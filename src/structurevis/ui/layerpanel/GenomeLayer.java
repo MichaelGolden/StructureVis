@@ -455,6 +455,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
         ArrayList<StructureAndMouseoverRegion> rectangles = new ArrayList<StructureAndMouseoverRegion>();
         double minDistance = 3;
         int level = 0;
+        System.out.println("start");
         for (int i = 0; i < structures.size(); i++) {
             double h = (getHeight() - rulerHeight - 1) / (double) (structures.size());
             double y = rulerHeight + i * h;
@@ -465,15 +466,21 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
 
             int rectLevel = 0;
             for (rectLevel = 0; rectLevel <= level + 1; rectLevel++) {
-                if (minHorizontalDistance(rectangles, rect, rectLevel) < minDistance) {
+                double dist = minHorizontalDistance(rectangles, rect, rectLevel);
+                System.out.println(i+"\t"+dist+"\t"+level+"\t"+rect);
+                if (dist < minDistance) {
                 } else {
+                    System.out.println("break");
                     break;
                 }
             }
+            System.out.println(rectLevel);
             level = Math.max(level, rectLevel);
             rect.setRect(x + xoffset, rulerHeight + rectLevel * h, regionWidth, h);
+            System.out.println("**"+rectLevel+"\t"+rect);
             rectangles.add(new StructureAndMouseoverRegion(structures.get(i), rect, rectLevel));
 
+            /*
             // wrap around
             if (layerPanel.genomeLength < (double) structures.get(i).getEndPosition()) {
                 Rectangle2D rect2 = new Rectangle2D.Double(x + xoffset, y, regionWidth, h);
@@ -487,7 +494,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
                 level = Math.max(level, rectLevel);
                 rect2.setRect(x + xoffset, rulerHeight + rectLevel * h, regionWidth, h);
                 rectangles.add(new StructureAndMouseoverRegion(structures.get(i), rect2, rectLevel));
-            }
+            }*/
         }
 
         for (int i = 0; i < rectangles.size(); i++) {
@@ -505,16 +512,20 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
         double width = rect.getWidth();
         double distance = Double.MAX_VALUE;
         for (int i = 0; i < rectangles.size(); i++) {
-            if (rectangles.get(i).level == level) {
-                double dist1 = rectangles.get(i).rectangle.getX() - (x + width);
+            StructureAndMouseoverRegion other = rectangles.get(i);
+            if (other.level == level) {
+                double dist1 = other.rectangle.getX() - (x + width);
                 if (dist1 >= 0) {
                     distance = Math.min(distance, dist1);
                 }
-                double dist2 = x - (rectangles.get(i).rectangle.getX() + rectangles.get(i).rectangle.getWidth());
+                double dist2 = x - (other.rectangle.getX() + other.rectangle.getWidth());
                 if (dist2 >= 0) {
                     distance = Math.min(distance, dist2);
                 }
-                if (x >= rectangles.get(i).rectangle.getX() && x + width <= rectangles.get(i).rectangle.getX() + rectangles.get(i).rectangle.getWidth()) {
+                if (x >= other.rectangle.getX() && x + width <= other.rectangle.getX() + other.rectangle.getWidth()) {
+                    distance = 0;
+                }
+                if (x <= other.rectangle.getX() && x + width >= other.rectangle.getX() + other.rectangle.getWidth()) {
                     distance = 0;
                 }
             }
