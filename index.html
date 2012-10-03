@@ -29,7 +29,7 @@ overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
 }
 
 #framecontentLeft{	
-	top: 136px;	
+	top: 0px;	
 	left: 2px;
 	background-color: #dedede;
 }
@@ -48,7 +48,7 @@ color: white;
 #maincontent{
 position: fixed; 
 left: 170px; /*Set left value to WidthOfLeftFrameDiv*/
-top: 135px; /*Set top value to HeightOfTopFrameDiv*/
+top: 0px; /*Set top value to HeightOfTopFrameDiv*/
 right: 0;
 bottom: 0;
 overflow: auto; 
@@ -99,20 +99,59 @@ width: 100%;
   <body>
     <div id="framecontentLeft">
       <div class="innertube">
-		<a href="index.html">Home</a>
-		<br><a href="honoursproject.html">Honours Project</a>
-		<br><a href="structurevis.html">StructureVis</a>
-		<!-- <br><a href="">Youtube channel</a> -->
-		<br><a href="publications.html">Publications</a>
-		<br><a href="contact.html">Contact</a>
+		<a href="http://web.cbio.uct.ac.za/~michael/">Return to my home page</a>
+		<!--br><a href="honoursproject.html">Honours Project</a>-->
+		<!-- <br><a href="">StructureVis</a>
+		<br><a href="">Youtube channel</a> -->
+		<!--<br><a href="publications.html">Publications</a>
+		<br><a href="contact.html">Contact</a>-->
       </div>
     </div>
-    <div id="framecontentTop"><img style=""
-        alt="" src="images/logo.png"> </div>
+    <!--<div id="framecontentTop"><img style=""
+        alt="" src="images/logo.png"> </div>-->
     <div id="maincontent">
       <div class="innertube">
-        Hi, my name is Michael Golden, I am currently a Masters student in the UCT Computational Biology Group.
-		<br>Use the links to the left to navigate this site.
+		<h2><u>StructureVis</u></h2>
+		<p>StructureVis is a tool for visualising RNA and DNA secondary structures.</p>
+		
+		<br/></br><h3><u>Features</u></h3>
+		<ul style="margin-left:2em;list-style-type:square;">
+			<li>Written in Java: works on both Linux and Windows.</li>
+			<li>Ability to visualise secondary structures of entire virus genomes.</li>
+			<li>Ability to overlay and visualise heterogenous data sources.</li>
+			<li>Automated ranking of structures.</li>
+			<li>Substructure and full-genome views.</li>
+			<li>On the fly filtering of numeric data.</li>
+			<li>Save structure and data legend images for use in publication, in various formats (PNG, SVG and EMF).</li>			
+			<li>A dataset creator for creating your own datasets.</li>			
+		</ul>
+		
+		
+		<br/></br><h3><u>Download</u></h3>
+		<p>
+			<a class="downloadlink" href="structurevis/latest/StructureVis.zip" target="_blank">StructureVis.zip (17MB)</a> (Version 1.0 - 03 October 2012)<!-- <font style="color:red">Please note this is a preliminary version, download at your own risk!</font>-->
+			 - to install extract to a location on your computer (Requires Java Runtime Environment 1.6 or higher to run)
+		</p>
+		
+		<br/></br><h3><u>Manual</u></h3>
+		<p>It is recommended that you view the user manual that comes with the StructureVis distribution, however, if you wish to view an online version click <a href="structurevis/latest/Manual/index.html" target="_blank">here</a>.</p>
+				
+		
+		<br/></br><h3><u>Source code availability</u></h3>
+		<p>StructureVis is written in Java and the source code is licensed under GPLv3. The source code is available at our <a href="https://github.com/MichaelGolden/StructureVis" target="_blank">GitHub repository</a>.</p>
+				
+				
+				
+		<br/><br/><h3><u>Screenshots</u></h3>	
+		<br/>
+		<img style="" alt="StructureVis substructure view" src="structurevis/screenshot1.png">	
+		<p>StructureVis substructure view</p>
+		<br/><br/>		
+		<img style="" alt="StructureVis full genome view" src="structurevis/screenshot2.png">	
+		<p>StructureVis full genome view</p>
+		<br/><br/>
+		<img style="" alt="StructureVis dataset creator" src="structurevis/screenshot3.png">	
+		<p>StructureVis dataset creator</p>
       </div>
     </div>
   </body>
