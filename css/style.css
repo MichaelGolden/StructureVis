@@ -1,0 +1,38 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: "Arial";	
+}
+
+.imagecaption { 
+	font-size: 0.8em; 
+	margin-top: 4px;	
+}
+
+.downloadlink	{
+   padding-right: 20px;
+   background: transparent url("../images/download_icon.png") no-repeat center right;
+}
+
+ul, p, h4 {
+	font-size: 0.95em;	
+}
+
+ul
+{
+	list-style: none;
+}
+
+h2 {
+	font-size: 1.1em;
+	margin-bottom: 3px;	
+}
+
+h3 {
+	font-size: 1.0em;	
+	margin-bottom: 2px;		
+}
+
+h4 {
+	margin-bottom: 1px;		
+}

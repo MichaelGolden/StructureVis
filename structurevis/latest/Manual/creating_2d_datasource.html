@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Creating a 2D data source</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <meta name="author" content="Michael">
+  </head>
+  <body>
+    <h2>Creating a 2D data source</h2>
+	<h3 name="S1">How to create a 2D data source</h3>	
+	<p>When using the dataset creation wizard on your own custom dataset it is necessary to get your data into a format that StructureVis can recognize.
+	In order to do this for two-dimensional data overlays, StructureVis requires a pairwise tab-delimitted matrix and a corresponding mapping alignment. 	
+	<br/>
+	<p align="center"><img src="images/2d_tab_delimitted_matrix.png" alt="2d tab delimitted matrix"></p>
+	The matrix must consist of 3 columns where the first two columns represent the x, y co-ordinates and the third column represents a numeric value. Empty values are reprsented by omitting a particular set of x, y co-ordinates.
+	The numbering of the x, y positions corresponds to columns of the alignment, where 1 corresponds to the first nucleotide column.
+	<br/><br/>Once you have completed creating your tab-delimmited matrix it can be loaded into the dataset creator (remember to select Pairwise Matrix as the data file type), see below:
+	</p>
+	<p align="center"><img src="images/data_source_2d.png" alt="Spreadsheet"></p>
+  </body>
+</html>

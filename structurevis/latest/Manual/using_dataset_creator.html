@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Using StructureVis dataset creator</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <meta name="author" content="Michael">
+  </head>
+  <body>
+    <h2>Tutorial: using the dataset creator</h2>
+    <h3 name="introduction">Introduction</h3>
+    <p> This tutorial will guide you through the process of creating a
+      StructureVis dataset using the <a
+href="http://www.nature.com/nature/journal/v460/n7256/full/nature08237.html"
+        target="_blank">HIV-1 SHAPE</a> data. <b>The bolded text are the minimum instructions necessary to complete the tutorial.</b></p> 
+    <p> <b>All files used in this tutorial are located in the
+        'shape_tutorial' directory of your StructureVis directory (i.e.
+        /your_structure_vis_directory/Manual/shape_tutorial).</b> </p>
+    <br/>
+    <h3 name="S1">1. Project name and location</h3>
+    <p> </p>
+    <p align="center"><img src="shape_tutorial/images/welcome_panel.png"
+        alt="Welcome panel"></p>
+    <b>Enter a project name.</b> The project name must be unique in the project location, i.e. no
+    file or folder in the location may have the same name. Generally you
+    should leave the project location unchanged, as it is the default
+    StructureVis workspace on your drive, i.e. StructureVis will
+    automatically open to this location when you load a new project. <b>Click next.</b>
+    <br/><br/>
+    <a name="S2">
+      <h3>2. Specify the structure parameters</h3>
+    </a> <a name="S2_1">
+      <h4>2.1 Select a structure file</h4>
+    </a>
+    <p align="center"><img
+        src="shape_tutorial/images/structure_specify_consensus.png"
+        alt="Specify the consensus structure"></p>
+    <p>Click on the 'Browse' button located next to the 'Structure' field, navigate to the 'shape_tutorial' directory and <b>select the file named 'hiv-1-shape-helix-file.txt'</b>. This file
+      represents the secondary structure of an entire HIV-1 genome, as
+      determined by a SHAPE experiment.</p>
+    <p align="center"><img
+src="shape_tutorial/images/structure_specify_consensus_press_autodetect.png"
+        alt="Press auto-detect"></p>
+    <p><b>Press 'Auto-detect'</b>. Once you have specified the file, you
+      must specify the file type, in the case of the HIV-1 secondary
+      structure data the file type is tab-delimitted helix. You can
+      specify the file type in two ways, by selecting the type from the
+      drop-down menu or by clicking 'Auto-detect'.</p>
+    <br/>
+    <a name="S2_2">
+      <h4>2.2 Specify a reference nucleotide alignment</h4>
+    </a>
+    <p>A reference nucleotide alignment is an alignment file that is
+      used to map data to a the secondary structure that you
+      have specified. It is very important that the reference nucleotide
+      alignment is specified correctly, otherwise all subsequent data
+      will be mapped incorrectly to the structure.</p>
+    <p>The reference nucleotide consists of a sequence (or sequences)
+      where every column of the alignment corresponds exactly to every
+      nucleotide of the secondary structure. Usually the secondary structure of a particular genome will have a corresponding sequence or nucleotide alignment, so most of the time you can just use this.</p>
+    <p align="center"><img
+        src="shape_tutorial/images/structure_specify_reference.png"
+        alt="Specify the reference structure"></p>
+    <p><b>Select the reference alignment by browsing to the NL4-3 sequence file in the tutorial
+      directory (../shape_tutorial/NL4-3-shape-alignment.fas)</b>. 
+	  In the case of the HIV-1 SHAPE analysis used here, the NL4-3
+      HIV-1 RNA genome sequence was used, we have manually edited the provided alignment for you by truncating the ends so that it corresponds precisely to the coordinates specified in the structure file. Unfortunately, this is not
+      immediately obvious by looking at the structure file
+      that you specified in step <a href="#S2_1">2.1</a>, however, if
+      you inspect the SHAPE reactivities file
+      (../shape_tutorial/hiv-1-shape-reactivities.txt) which corresponds
+      to the structure you will see that the sequence in the
+      second column is precisely the same as the sequence in the
+      alignment file.</p>
+    <h4><a name="S2_3">2.3 Set the substructure parameters</a></h4>
+    <p align="center"><img
+        src="shape_tutorial/images/structure_specify_substructures.png"
+        alt="Specify substructure parameters"></p>
+	<p>Substructures are individual regions of the structure that are viewable in the 'Substructure' view. Instead of having the user manually generate a list of substructures to be viewed, StructureVis can automatically generate a list of substructures with a user-specified minimum and maximum size. Using the default sizes is generally okay. <b>Click next.</b></p>
+    <br/>
+    <h3 name="S3">3. Sequence annotations</h3>
+     <p align="center"><img
+        src="shape_tutorial/images/genome_annotations.png"
+        alt="Add annotations fron a Genbank file and map"></p>
+	<p>Sequence annotations provide a way of visualising the genome organisation of a particular organism or the annotations of a sequence and an additional way to navigate through the structures contained within a sequence. <b>Click 'Add annotations fron a Genbank file and map' and select the file named 'pNL4-3.gb' (This may take a few seconds). Now select a few annotations (for this example choose whichever ones you like) listed in the table in the upper panel by ticking in the 'Use' column, these will be displayed in the sequence annotations panel below</b>. StructureVis will use the sequence contained within the Genbank file to map these annotations against the reference alignment (notice how the 'Start' and 'End' coordinates from the Genbank file differ dramatically from the 'Mapped start' and 'Mapped end' coordinates). You can change the colours of the annotations by clicking the rectangles in the upper panel and the height at the which they appear by changing the 'Level' column.</p>
+    <br/>
+    <h3 name="S4">4. Data overlays</h3>	  	
+	<p align="center"><img
+        src="shape_tutorial/images/data1D.png"
+        alt="Add 1D data"></p>
+    <p>Data overlays are pieces of data that can be overlayed on the genomic secondary structure.  In this tutorial we will add a 1D data overlay, this type of overlay is a list of nucleotide positions and a corresponding data values. Adding a 1D overlay colours the nucleotides of the secondary structure according to their correponding data values.</p>
+	<ol style="font-size:1em">
+		<li>
+		<b>Click 'Add 1D data'</b>, this will open a dialog where you can add a corresponding data source. To learn how to create your own custom 1D data source, see <a href ="creating_1d_datasource.html" target ="showframe">Creating a 1D data source</a>.
+		</li>
+		<li>
+		<b>Click 'Browse' next to the 'Data file' field and select the 'hiv-1-shape-reactivities.csv' file.</b> This file contains SHAPE reactivity and pairing probabilities for nucleotides in the HIV-1 NL4-3 genome.
+		</li>
+		<li>
+		<b>Next add the 'NL4-3-shape-alignment.fas' mapping alignment by selecting 'Browse' next to 'Mapping alignment'.</b> This mapping alignment allows the 1D data to be correctly mapped to the reference structure.
+		</li>
+		<li>
+		<b>Type 'SHAPE reactivity' in the 'Field name' field</b>, this will give your data overlay a name which will displayed in the data legend and other places where this data overlay appears.
+		</li>
+		<li>
+		<b>Click the 'Position column' drop-down list</b>, this will display a list of columns in the CSV file. <b>Select the '1. Position' item</b>, this specifies that the first column of the alignment will be used as the position co-ordinates of the corresponding data values.
+		</li>
+		<li>
+		<b>Click the 'Data column' drop-down list</b>, once again this will display a list of columns in the CSV file. <b>Select the '3. SHAPE reactivity' item</b>, this column of the CSV file contains the SHAPE reactivites of individual nucleotides within the HIV-1 NL4-3 genome, high values indicate nucleotides which are reactive to the SHAPE chemistry, these are nucleotides which tend to be unpaired within the genome - it is this information that allow the authors of the paper to generate of model of the secondary structure of HIV-1 based on experimental data.
+		</li>	
+		<li>
+		<b>From the 'Data maximum' drop-down list select 'Custom' and enter '1.0' into the adjacent text field.</b> This will filter out any data values greater than 1.0, this is necessary in the case of the SHAPE data because the majority of data values tend to fall in the range 0.0 - 1.0, displaying values > 1.0 will cause most of the colours corresponding to data values (depicted in the data legend on the right) to be indistinguishable from one another because there are very few data values > 1.0.
+		</li>
+		<li>
+		<b>Manipulate the data legend</b> on the right to match the colour gradient depicted in the image above. Double-click on the triangles to change their colours. Double-click on an empty region to add an intervening colour. The colours can be moved by dragging them up or down and removed by dragging them off the right of the legend.
+		</li>		
+	</ol>
+	<br/>
+    <h3 name="S5">5. Finish</h3>
+	<p>Once you have completed the data overlays section <b>click next</b>, this will take you to the last panel which will finalize the creation of your dataset, any errors that occur during this process will be displayed on this panel and you will be able to go back in the wizard in order to rectify them.</p>
+  </body>
+</html>

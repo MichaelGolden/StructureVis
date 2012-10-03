@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Ranking of structures</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <meta name="author" content="Michael">
+  </head>
+  <body>
+    <h2>Ranking of structures</h2>
+	<h3 name="S1">How structures are ranked</h3>	
+	<p>StructureVis supports ranking of structures by their one-dimensional or two-dimensional data values to assist the investigator in mining out structures which may be of the interest. 
+	<br/><br/>A structure is ranked by comparing the distribution of data values corresponding to the structure for a particular a data source against all data values for the same data source using a Mann-Whitney U test.
+	<br/><br/>The Mann-Whitney U test generates a z-score which gives an indication of whether a particular structure lies at an extreme of the distribution of all data values in a data source. For example, a large negative z-score for a particular structure score means that the median value for a structure is significantly less than the median data value for all data values in the data source, whereas a z-score close to zero indicates that the structure does not contain data values that are significantly different from the rest. 
+	<br/><br/>Structures that lie at an extreme (high or low z-score) are typically the most interesting.
+	</p>
+	<h3 name="S2">How to rank structures</h3>	
+	<p>Select <b>Rank structures</b> from the <b>Analysis menu</b> and then select the desired data source to rank against from the <b>Data source</b> menu.
+	</p>
+	<h3 name="S3">Ranking options</h3>	
+	<ol style="font-size:1em">
+		<li>
+		<b>All nucleotides</b> - all non-empty values within a structure are compared against all non-empty values in the data source. Note for two-dimensional data sources the number of data values may be may be very large (sequence_length<sup>2</sup>), given that the ranking test will consider every non-empty pair of nucleotides in the sequence and it may take a long time to run.
+		</li>
+		<li>
+		<b>Paired only</b> - all non-empty values corresponding to paired nucleotides within a structure are compared against all non-empty values corresponding to paired nucleotides in the data source. In the case of a two-dimensional overlay the ranking test only considers pairs of nucleotides which are paired in the structure, thus greatly reducing the number of data points it needs to consider.
+		</li>
+		<li>
+		<b>Unpaired only</b> - all non-empty values corresponding to unpaired nucleotides within a structure are compared against all non-empty values corresponding to unpaired nucleotides in the data source. Note: as with the "All nucleotides" option, this may take a long time to run for two-dimensional data sources.
+		</li>		
+	</ol>
+  </body>
+</html>

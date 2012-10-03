@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Creating a 1D data source</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <meta name="author" content="Michael">
+  </head>
+  <body>
+    <h2>Creating a 1D data source</h2>
+	<h3 name="S1">How to create a 1D data source</h3>	
+	<p>When using the dataset creation wizard on your own custom dataset it is necessary to get your data into a format that StructureVis can recognize.
+	In order to do this for one-dimensional data overlays, StructureVis requires a CSV file and a corresponding mapping alignment. 
+	<br/><br/>Paste your data into your favourite spreadsheet editor, where the columns represent different data items (above right). The first row can be optionally used to label the data.
+	<p align="center"><img src="images/1d_spreadsheet_and_mapping.png" alt="Spreadsheet"></p>
+	<br/>Typically you will only require two columns in your spreadsheet: a position column and a data column for a single data item (although more data columns can be specified if you so wish).
+	The position column is a list of coordinates that correspond to column positions in the mapping alignment (above right), where 1 corresponds to the first nucleotide column. The data column is a list of numeric data values.
+	In the example above there are two data columns: 'SHAPE reactivity' and 'Pairing probability'. For illustration purposes a 'Base' column has been added to show how the positions should correspond to the mapping alignment.
+	<br/><br/>Once you have completed creating your spreadsheet, save it as a CSV (Comma Seperated Values) file. It can now be loaded into the dataset creator, see below:
+	</p>
+	<p align="center"><img src="images/data_source_1d.png" alt="Spreadsheet"></p>
+  </body>
+</html>

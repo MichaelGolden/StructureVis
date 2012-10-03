@@ -1,0 +1,181 @@
+<!--Force IE6 into quirks mode with this comment tag-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=ISO-8859-1">
+    <title>Homepage of Michael Golden</title>
+    <style type="text/css">
+
+*{
+	font-family: sans-serif;
+}
+	
+body{
+margin: 0;
+padding: 0;
+border: 0;
+overflow: hidden;
+height: 100%; 
+max-height: 100%; 
+}
+
+#framecontentLeft, #framecontentTop{
+position: absolute; 
+left: 0; 
+width: 170px; /*Width of left frame div*/
+height: 100%;
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+}
+
+#framecontentLeft{	
+	top: 136px;	
+	left: 2px;
+	background-color: #dedede;
+}
+
+#framecontentTop{ 
+padding: 0px 0 0 170px;
+left: 2px; /*Set left value to WidthOfLeftFrameDiv*/
+right: 0;
+width: auto;
+height: 135px; /*Height of top frame div*/
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+background-color: #efefef;
+color: white;
+}
+
+#maincontent{
+position: fixed; 
+left: 170px; /*Set left value to WidthOfLeftFrameDiv*/
+top: 135px; /*Set top value to HeightOfTopFrameDiv*/
+right: 0;
+bottom: 0;
+overflow: auto; 
+background: #fff;
+}
+
+.innertube{
+margin: 15px; /*Margins for inner DIV inside each DIV (to provide padding)*/
+}
+
+* html body{ /*IE6 hack*/
+padding: 125px 0 0 170px; /*Set value to (HeightOfTopFrameDiv 0 0 WidthOfLeftFrameDiv)*/
+}
+
+* html #maincontent{ /*IE6 hack*/
+height: 100%; 
+width: 100%; 
+}
+
+* html #framecontentTop{ /*IE6 hack*/
+width: 100%;
+}
+
+</style>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+			var _gaq = _gaq || [];
+
+			_gaq.push(['_setAccount', 'UA-26546268-1']);
+
+			_gaq.push(['_trackPageview']); (function() {
+
+				var ga = document.createElement('script');
+
+				ga.type = 'text/javascript';
+
+				ga.async = true;
+
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+				var s = document.getElementsByTagName('script')[0];
+
+				s.parentNode.insertBefore(ga, s);
+
+			})();
+</script>
+ </head>
+  <body>
+    <div id="framecontentLeft">
+      <div class="innertube">
+		<a href="index.html">Home</a>
+		<br><a href="honoursproject.html">Honours Project</a>
+		<br><a href="structurevis.html">StructureVis</a>
+		<!-- <br><a href="">Youtube channel</a> -->
+		<br><a href="publications.html">Publications</a>
+		<br><a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div id="framecontentTop"><img style=""
+        alt="" src="images/logo.png"> </div>
+    <div id="maincontent">
+      <div class="innertube">
+        <table border="0">
+			<tr>
+				<td width="800px" style="vertical-align:top">
+				<p style="margin-bottom:8px">
+					<h2><u>Honours Project (2011)</u></h2></br>
+				</p>
+				<h3>Project title</h3>
+				<p>
+					Identification of evolutionarily conserved genomic secondary structures within viral genomes.
+				</p>
+				<br/>
+				<b>Supervisor</b>
+				<br/>
+				<p>
+					Dr. Darren Martin
+				</p>
+				<br/>
+				<h3>Abstract</h3>
+				<p align="justify">
+					The genomes of single stranded DNA and RNA viruses often contain numerous nucleic acid secondary structures. Whilst a number of these structures have been found to play important roles during the life cycles of these viruses, most have neither any identified function nor any known impact on viral fitness. Using an array of bioinformatic techniques we investigated the influence of inferred secondary structures on sequence evolution in the single stranded RNA virus, Hepatitis C Virus. We detected a strong association between structured regions of the genome and selective contraints on synonymous substitutions in coding regions, which suggests either that selection is acting to preserve these structures, or that the structures themselves lower mutation rates at these sites. In addition, coevolution analyses have revealed that there is a significant tendency for nucleotides which form part of structures to coevolve in a complementary fashion. Together these lines of evidence support the notion that structures which form in the genome are under strong evolutionary selection. Finally, we use data from the various analyses to rank structures within the Hepatitis C virus genome in order of their likely biologically relevance.
+				</p>
+				<br/>
+				<h3>Supplementary data</h3>				
+				<ul style="margin-top:0.6em">
+					<h4>HCV structure rankings</h4>
+					<li><a href="honoursproject/hcv-structures/hcv-table.html"	target="_blank">Supplementary Table S1 - Table of HCV structures and images (web)</a></li>
+					<li><a class="downloadlink" href="honoursproject/files/hcv-rankings.xlsx" target="_blank">Supplementary Table S1 - Table of HCV structures (.xlsx)</a></li>
+					
+					<br/>
+					<h4>Project source code</h4>
+					<li><a class="downloadlink" href="honoursproject/files/sourcecode-netbeans.zip" target="_blank">Project source code (.zip)</a></li>
+					
+					<br/>
+					<h4>Alignments used in study</h4>
+					<li><a class="downloadlink" href="honoursproject/files/nasp-hcv-folding-alignment.fas" target="_blank">NASP folding alignment (.fas)</a></li>
+					<li><a class="downloadlink" href="honoursproject/files/parris-hcv-coding-alignment.fas" target="_blank">PARRIS coding alignment (.fas)</a></li>
+					<li><a class="downloadlink" href="honoursproject/files/spidermonkey-hcv-alignment.fas.zip" target="_blank">Spidermonkey coevolution alignment (.fas)</a></li>
+					
+					<br/>
+					<h4>NASP folding output</h4>
+					<li><a class="downloadlink" href="honoursproject/files/nasp-hcv-consensus-matrix.csv.zip" target="_blank">NASP consensus matrix (.csv.zip)</a></li>
+					<li><a class="downloadlink" href="honoursproject/files/nasp-hcv-consensus-fold.ct" target="_blank">NASP consensus fold (.ct)</a></li>
+					<li><a class="downloadlink" href="honoursproject/files/nasp-hcv-results.txt" target="_blank">NASP results file (.txt)</a></li>
+					
+					<br/>
+					<h4>GARD and PARRIS output</h4>
+					<li><a href="honoursproject/files/gard-hcv-results.html" target="_blank">GARD recombination results (web)</a></li>
+					<li><a class="downloadlink" href="honoursproject/files/hcv-synrates.xlsx" target="_blank">Synonymous substitution rates and pairing (.xlsx)</a></li>
+				</ul>							
+				</td>
+				<td  width="320px" style="padding-left:15px;padding-right:15px;">
+					<div class="image">
+						<img src="honoursproject/s246-314px.png" alt="NASP246" style="padding-bottom:10px"/>
+						<div class="imagecaption" align="justify">
+							<b>NASP246.</b> Structure identified in the Core gene of HCV. 
+							Red-orange lines indicate nucleotide co-evolution. 
+							Blue-green codons indicate synonymous substitution rates 
+							- with blue being more constrained (fewer synonymous substitutions than expected) 
+							and green being less constrained (more synonymous substitutions than expected).
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+      </div>
+    </div>
+  </body>
+</html>

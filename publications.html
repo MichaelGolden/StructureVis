@@ -1,0 +1,125 @@
+<!--Force IE6 into quirks mode with this comment tag-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+      charset=ISO-8859-1">
+    <title>Homepage of Michael Golden</title>
+    <style type="text/css">
+
+*{
+	font-family: sans-serif;
+}
+	
+body{
+margin: 0;
+padding: 0;
+border: 0;
+overflow: hidden;
+height: 100%; 
+max-height: 100%; 
+}
+
+#framecontentLeft, #framecontentTop{
+position: absolute; 
+left: 0; 
+width: 170px; /*Width of left frame div*/
+height: 100%;
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+}
+
+#framecontentLeft{	
+	top: 136px;	
+	left: 2px;
+	background-color: #dedede;
+}
+
+#framecontentTop{ 
+padding: 0px 0 0 170px;
+left: 2px; /*Set left value to WidthOfLeftFrameDiv*/
+right: 0;
+width: auto;
+height: 135px; /*Height of top frame div*/
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+background-color: #efefef;
+color: white;
+}
+
+#maincontent{
+position: fixed; 
+left: 170px; /*Set left value to WidthOfLeftFrameDiv*/
+top: 135px; /*Set top value to HeightOfTopFrameDiv*/
+right: 0;
+bottom: 0;
+overflow: auto; 
+background: #fff;
+}
+
+.innertube{
+margin: 15px; /*Margins for inner DIV inside each DIV (to provide padding)*/
+}
+
+* html body{ /*IE6 hack*/
+padding: 125px 0 0 170px; /*Set value to (HeightOfTopFrameDiv 0 0 WidthOfLeftFrameDiv)*/
+}
+
+* html #maincontent{ /*IE6 hack*/
+height: 100%; 
+width: 100%; 
+}
+
+* html #framecontentTop{ /*IE6 hack*/
+width: 100%;
+}
+
+</style>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+			var _gaq = _gaq || [];
+
+			_gaq.push(['_setAccount', 'UA-26546268-1']);
+
+			_gaq.push(['_trackPageview']); (function() {
+
+				var ga = document.createElement('script');
+
+				ga.type = 'text/javascript';
+
+				ga.async = true;
+
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+
+				var s = document.getElementsByTagName('script')[0];
+
+				s.parentNode.insertBefore(ga, s);
+
+			})();
+</script>
+</head>
+  <body>
+    <div id="framecontentLeft">
+      <div class="innertube">
+		<a href="index.html">Home</a>
+		<br><a href="honoursproject.html">Honours Project</a>
+		<br><a href="structurevis.html">StructureVis</a>
+		<!-- <br><a href="">Youtube channel</a> -->
+		<br><a href="publications.html">Publications</a>
+		<br><a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div id="framecontentTop"><img style=""
+        alt="" src="images/logo.png"> </div>
+    <div id="maincontent">
+      <div class="innertube">
+        <h3 style="margin-bottom:8px"><u>Publications</u></h3>
+    	<ul style="font-size:1em">
+			<li>
+			<b>Martin DP, Biagini P, Lefeuvre P, Golden M and Varsani A (2011).</b><br>
+			Recombination in eukaryotic single stranded DNA viruses. <i>Viruses</i>,
+			 <a href="http://www.mdpi.com/1999-4915/3/9/1699/" target="_blank">doi:10.3390/v3091699</a>.
+			</li>
+		</ul>  
+      </div>
+    </div>
+  </body>
+</html>
