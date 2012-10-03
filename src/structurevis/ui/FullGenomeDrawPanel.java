@@ -205,7 +205,8 @@ public class FullGenomeDrawPanel extends JPanel implements ActionListener, Mouse
             // determine full genome structure coordinates
             if (!load(maxSubstructureSize)) {
                 for (int i = 0; i < substructures.size(); i++) {
-                    ArrayList<Point2D.Double> coordinates = mainapp.getStructureCoordinates(substructures.get(i).getDotBracketString());
+                    ArrayList<Point2D.Double> coordinates = NAView.naview_xy_coordinates(RNAFoldingTools.getPairedSitesFromDotBracketString(substructures.get(i).getDotBracketString()));
+                    //ArrayList<Point2D.Double> coordinates = mainapp.getStructureCoordinates(substructures.get(i).getDotBracketString());
                     Point2D.Double[] normalisedCoordinates = MainApp.normaliseStructureCoordinates(coordinates);
                     int startIndex = substructures.get(i).startPosition - 1;
 
