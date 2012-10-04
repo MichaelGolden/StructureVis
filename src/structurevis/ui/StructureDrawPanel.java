@@ -973,8 +973,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
     }
 
     public void saveAsPNG(File file) {
-        int panelWidth = (int) ((maxx - minx) * 4 + xoffset * 2);
-        int panelHeight = (int) ((maxy - miny) * 4 + 100);
+        int panelWidth = (int) ((maxx - minx) * horizontalScale + xoffset * 2);
+        int panelHeight = (int) ((maxy - miny) * verticalScale + 100);
         Dimension d = new Dimension((int) Math.ceil(panelWidth * zoomScale), (int) Math.ceil(panelHeight * zoomScale));
 
         BufferedImage tempInage = null;
