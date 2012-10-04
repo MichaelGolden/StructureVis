@@ -255,7 +255,10 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         repaint = true;
         repaint();
     }
-
+    
+    
+    double horizontalScale = 2.6;
+    double verticalScale = 2.6;
     public void computeStructureToBeDrawn(Structure structure) {
         if (structure == null) {
             return;
@@ -279,8 +282,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         nucleotidePositions = new Point2D.Double[np.size()];
         for (int i = 0; i < nucleotidePositions.length; i++) {
             nucleotidePositions[i] = new Point2D.Double();
-            nucleotidePositions[i].x = xoffset + (np.get(i).x - minx) * 2.6;
-            nucleotidePositions[i].y = 50 + (np.get(i).y - miny) * 2.6;
+            nucleotidePositions[i].x = xoffset + (np.get(i).x - minx) * horizontalScale;
+            nucleotidePositions[i].y = 50 + (np.get(i).y - miny) * verticalScale;
         }
 
     }
@@ -324,8 +327,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             return null;
         }
 
-        int panelWidth = (int) ((maxx - minx) * 4 + xoffset * 2);
-        int panelHeight = (int) ((maxy - miny) * 4 + 100);
+        int panelWidth = (int) ((maxx - minx) * horizontalScale + xoffset * 2);
+        int panelHeight = (int) ((maxy - miny) * verticalScale + 100);
 
         // initialise svg
         pw.println("<?xml version=\"1.0\" standalone=\"no\"?>");
@@ -571,8 +574,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         if (structure == null || nucleotidePositions == null) {
             return;
         }
-        int panelWidth = (int) ((maxx - minx) * 4 + xoffset * 2);
-        int panelHeight = (int) ((maxy - miny) * 4 + 100);
+        int panelWidth = (int) ((maxx - minx) * horizontalScale + xoffset * 2);
+        int panelHeight = (int) ((maxy - miny) * verticalScale + 100);
         Dimension d = new Dimension((int) (panelWidth * zoomScale), (int) (panelHeight * zoomScale));
 
         try {
@@ -1104,8 +1107,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         Graphics2D g = (Graphics2D) graphics;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        int panelWidth = (int) ((maxx - minx) * 4 + xoffset * 2);
-        int panelHeight = (int) ((maxy - miny) * 4 + 100);
+        int panelWidth = (int) ((maxx - minx) * horizontalScale + xoffset * 2);
+        int panelHeight = (int) ((maxy - miny) * verticalScale + 100);
 
         if (repaint) {
             repaint = false;

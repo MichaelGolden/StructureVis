@@ -171,7 +171,8 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D g2 = (Graphics2D) graphics;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);        
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         int panelWidth = this.getWidth();
         int panelHeight = this.getHeight();
