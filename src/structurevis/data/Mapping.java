@@ -491,11 +491,4 @@ public class Mapping {
         }
         return null;
     }
-
-    public static void main(String[] args) {
-        Mapping m = Mapping.createMapping(new File("d:/Nasp/BFDV/BFDV_10Seq.fas"), new File("d:/Nasp/BFDV/BFDV_30_CPE.fas"), 2, true, "mappingforward.fas");
-        m.saveMapping(new File("full-to-bfdv-2.map"));
-        //Mapping n = Mapping.loadMapping(new File("full-to-pcv-gene.map"));
-        // n.saveMapping(new File("full-to-pcv-2.map"));
-    }
 }

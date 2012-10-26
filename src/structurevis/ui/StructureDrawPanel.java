@@ -8,16 +8,7 @@ import com.kitfox.svg.SVGCache;
 import com.kitfox.svg.SVGDiagram;
 import com.kitfox.svg.SVGException;
 import com.kitfox.svg.SVGUniverse;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
@@ -117,10 +108,9 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
     boolean useNativeDrawType = true;
     int currentDrawType = DRAW_SVG_GRAPHIC;
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
     Color bondColor = Color.lightGray;
     int bondThickness = 4;
-    
+
     //public boolean drawUsingSVG = false; // if true draw graphic using SVG, otherwise use native java graphics
     public StructureDrawPanel() {
         addMouseListener(this);
@@ -255,10 +245,9 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         repaint = true;
         repaint();
     }
-    
-    
     double horizontalScale = 2.6;
     double verticalScale = 2.6;
+
     public void computeStructureToBeDrawn(Structure structure) {
         if (structure == null) {
             return;
@@ -347,7 +336,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
                      * nucleotidePositions[b]); g.setStroke(new BasicStroke(2));
                      * g.setColor(Color.gray); g.draw(bond);
                      */
-                    pw.println("    <line id=\"bond_" + i + "\" x1=\"" + nucleotidePositions[a].x + "\" y1=\"" + nucleotidePositions[a].y + "\"  x2=\"" + nucleotidePositions[b].x + "\" y2=\"" + nucleotidePositions[b].y + "\" style=\"stroke-width:\"" +bondThickness+"\";stroke:#" + getHexString(bondColor) + "\"/>");
+                    pw.println("    <line id=\"bond_" + i + "\" x1=\"" + nucleotidePositions[a].x + "\" y1=\"" + nucleotidePositions[a].y + "\"  x2=\"" + nucleotidePositions[b].x + "\" y2=\"" + nucleotidePositions[b].y + "\" style=\"stroke-width:\"" + bondThickness + "\";stroke:#" + getHexString(bondColor) + "\"/>");
                 }
             }
             pw.println("</g>");
@@ -491,8 +480,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             if (nucleotidePositions[i] != null) {
                 int pos = (structure.getStartPosition() + i - 1) % mainapp.structureCollection.genomeLength + 1;
                 double fontSize = 11;
-                if(mainapp.numbering != 0 && pos % mainapp.numbering == 0)
-                {
+                if (mainapp.numbering != 0 && pos % mainapp.numbering == 0) {
                     pw.println("    <text id=\"nucleotide_position_" + pos + "\" x=\"" + (offsetx + nucleotidePositions[i].getX()) + "\" y=\"" + (nucleotidePositions[i].getY() + (fontSize / 2)) + "\" style=\"font-size:" + fontSize + "px;stroke:none;fill:black\" text-anchor=\"" + textanchor + "\" >");
                     pw.println("        <tspan>" + pos + "</tspan>");
                     pw.println("    </text>");
@@ -568,16 +556,15 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
     }
     public BufferedImage bufferedImage = null;
 
-    public void drawStructureNative(/*
-             * Graphics graphics
-             */) {
+    public void drawStructureNative(Graphics graphics) {
         if (structure == null || nucleotidePositions == null) {
             return;
         }
+       
         int panelWidth = (int) ((maxx - minx) * horizontalScale + xoffset * 2);
         int panelHeight = (int) ((maxy - miny) * verticalScale + 100);
         Dimension d = new Dimension((int) (panelWidth * zoomScale), (int) (panelHeight * zoomScale));
-
+        /*
         try {
             if (d.width > 0 && d.height > 0) {
                 if ((bufferedImage == null || d.width != bufferedImage.getWidth() || d.height != bufferedImage.getHeight())) {
@@ -602,12 +589,15 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         if (bufferedImage == null) {
             return;
         }
+        
 
         g = (Graphics2D) bufferedImage.getGraphics();
         //g = (Graphics2D) graphics;
+      
+        */
+        g = (Graphics2D) graphics;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.scale(zoomScale, zoomScale);
-
         g.setColor(Color.white);
         g.fillRect(0, 0, panelWidth, panelHeight);
 
@@ -789,8 +779,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
                 g.setColor(Color.black);
                 g.setFont(f2);
                 int pos = (structure.getStartPosition() + i - 1) % mainapp.structureCollection.genomeLength + 1;
-                if(mainapp.numbering != 0 && pos % mainapp.numbering == 0)
-                {
+                if (mainapp.numbering != 0 && pos % mainapp.numbering == 0) {
                     drawStringCentred(g, offsetx + nucleotidePositions[i].getX(), nucleotidePositions[i].getY() - 2, "" + pos);
                     g.setColor(Color.black);
                     g.draw(new Line2D.Double(nucleotidePositions[i].getX() + (side * nucleotideDiameter / 2) - 2, nucleotidePositions[i].getY(), nucleotidePositions[i].getX() + (side * nucleotideDiameter / 2) + 2, nucleotidePositions[i].getY()));
@@ -946,7 +935,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         }
 
         if (useNativeDrawType) {
-            drawStructureNative();
+            
+            //drawStructureNative();
             return DRAW_NATIVE_GRAPHIC;
         }
 
@@ -954,7 +944,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             createStructureSVG();
             return DRAW_SVG_GRAPHIC;
         } else {
-            drawStructureNative();
+            //drawStructureNative();
             return DRAW_NATIVE_GRAPHIC;
         }
     }
@@ -977,10 +967,10 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         int panelHeight = (int) ((maxy - miny) * verticalScale + 100);
         Dimension d = new Dimension((int) Math.ceil(panelWidth * zoomScale), (int) Math.ceil(panelHeight * zoomScale));
 
-        BufferedImage tempInage = null;
+        BufferedImage tempImage = null;
         try {
-            tempInage = (BufferedImage) (this.createImage((int) (d.width), (int) (d.height)));
-            g = (Graphics2D) tempInage.getGraphics();
+            tempImage = (BufferedImage) (this.createImage((int) (d.width), (int) (d.height)));
+            g = (Graphics2D) tempImage.getGraphics();
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             //g.scale(zoomScale, zoomScale);
@@ -988,15 +978,15 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             g.fillRect(0, 0, (int) (panelWidth * zoomScale), (int) (panelHeight * zoomScale));
 
             if (useNativeDrawType) {
-                g.drawImage(this.bufferedImage, 0, 0, this);
+                drawStructureNative(tempImage.getGraphics());
             } else if (diagram != null) {
                 diagram.render(g);
             } else {
                 throw new Exception("Diagram could not be saved. Unknown reason.");
             }
 
-            if (tempInage != null) {
-                ImageIO.write(tempInage, "png", file);
+            if (tempImage != null) {
+                ImageIO.write(tempImage, "png", file);
             }
 
         } catch (SVGException ex) {
@@ -1178,14 +1168,15 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             //g.fillRect(0, 0, getWidth(), getHeight());
             g.setColor(Color.white);
             g.fillRect(0, 0, (int) (panelWidth * zoomScale), (int) (panelHeight * zoomScale));
-            //drawStructureNative();
-            g.drawImage(bufferedImage, 0, 0, this);
+            //g.scale(zoomScale, zoomScale);
+            drawStructureNative(g);
+            //g.drawImage(bufferedImage, 0, 0, this);
         }
 
 
         setPreferredSize(new Dimension((int) Math.ceil(panelWidth * zoomScale), (int) Math.ceil(panelHeight * zoomScale)));
         revalidate();
-        g.scale(zoomScale, zoomScale);
+       // g.scale(zoomScale, zoomScale);
         if (selectedNucleotide != -1) {
             g.setColor(Color.black);
             g.drawOval((int) posx - (nucleotideDiameter / 2), (int) posy - (nucleotideDiameter / 2), (int) (nucleotideDiameter), (int) (nucleotideDiameter));
@@ -1497,16 +1488,36 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         int clicks = e.getWheelRotation();
-        if(clicks < 0)
-        {
-            zoomScale = Math.min(4, zoomScale + 0.10*(-Math.min(clicks,4)));
+        double prevZoomScale = zoomScale;
+        if (clicks < 0) {
+            zoomScale = Math.min(4, zoomScale + 0.10 * (-Math.min(clicks, 4)));
+        } else {
+            zoomScale = Math.max(0.1, zoomScale - 0.10 * Math.min(clicks, 4));
         }
-        else
-        {
-            zoomScale = Math.max(0.1, zoomScale - 0.10*Math.min(clicks,4));
+
+        if (prevZoomScale != zoomScale) {
+
+            Rectangle visible = getVisibleRect();
+            double currentCenterX = visible.x + (visible.width / 2);
+            double currentCenterY = visible.y + (visible.height / 2);
+            System.out.println(visible+"\t"+getViewCenter());
+            drawComplexStructure();
+            redraw();
+            Rectangle newVisible = getVisibleRect();
+            double newLeftX = currentCenterX - (newVisible.width / 2);
+            double newLeftY = currentCenterX - (newVisible.height / 2);
+            System.out.println(newVisible+"\t"+getViewCenter());
+            System.out.println("Centers" + currentCenterX + "\t" + currentCenterY + "\t" + newLeftX + "\t" + newLeftY);
+            //System.out.println("Center"+newLeftX+"\t"+newLeftY);
+            mainapp.substructureScrollPane.getViewport().setViewPosition(new Point((int) newLeftX, (int) newLeftY));
         }
-        drawComplexStructure();
-        redraw();
+    }
+
+    public Point2D.Double getViewCenter() {
+        Rectangle visible = getVisibleRect();
+        double currentCenterX = visible.x + (visible.width / 2);
+        double currentCenterY = visible.y + (visible.height / 2);
+        return new Point2D.Double(currentCenterX, currentCenterY);
     }
 
     class Interaction {
