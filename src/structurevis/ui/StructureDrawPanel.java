@@ -85,6 +85,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
     double maxy = Double.MIN_VALUE;
     JPopupMenu popupMenu = new JPopupMenu();
     JMenu zoomWindowMenu = new JMenu("Zoom level");
+    JRadioButtonMenuItem customZoomLevelItem = new JRadioButtonMenuItem("Custom");
     private static final int[] zoomLevels = {25, 50, 75, 100, 125, 150, 175, 200, 250, 300, 400};
     ButtonGroup slidingWindowGroup = new ButtonGroup();
     JRadioButtonMenuItem[] zoomMenuItems = new JRadioButtonMenuItem[zoomLevels.length];
@@ -110,13 +111,27 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
     Color bondColor = Color.lightGray;
     int bondThickness = 4;
+    JPopupMenu createBondPopupMenu = new JPopupMenu();
+    JMenuItem createBondItem = new JMenuItem("Create bond");
+    JMenuItem createBondRedrawItem = new JMenuItem("Create bond (Re-draw)");
+    JPopupMenu disruptBondPopupMenu = new JPopupMenu();
+    JMenuItem disruptBondItem = new JMenuItem("Disrupt bond");
+    JMenuItem disruptBondRedrawItem = new JMenuItem("Disrupt bond (Re-draw)");
+    ///JPopupMenu relayoutStructureBondPopupMenu = new JPopupMenu();
+    JMenuItem redrawStructureItem = new JMenuItem("Re-draw structure");
+    JMenuItem resetStructureItem = new JMenuItem("Reset structure");
+    //JMenuItem re = new JMenuItem("Disrupt bond");
 
     //public boolean drawUsingSVG = false; // if true draw graphic using SVG, otherwise use native java graphics
     public StructureDrawPanel() {
         addMouseListener(this);
         addMouseMotionListener(this);
         addMouseWheelListener(this);
-        addMouseListener(this);
+
+        redrawStructureItem.addActionListener(this);
+        popupMenu.add(redrawStructureItem);
+        resetStructureItem.addActionListener(this);
+        popupMenu.add(resetStructureItem);
 
         dnaMenuItem.addActionListener(this);
         dnaRnaMenu.add(dnaMenuItem);
@@ -127,6 +142,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         popupMenu.add(dnaRnaMenu);
         dnaMenuItem.setSelected(true);
 
+        zoomWindowMenu.add(customZoomLevelItem);
+        slidingWindowGroup.add(customZoomLevelItem);
         for (int i = 0; i < zoomLevels.length; i++) {
             zoomMenuItems[i] = new JRadioButtonMenuItem(zoomLevels[i] + "%");
             zoomMenuItems[i].addActionListener(this);
@@ -161,6 +178,16 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         numberingMenu.add(number10);
         numberingGroup.add(number10);
         popupMenu.add(numberingMenu);
+
+        createBondItem.addActionListener(this);
+        createBondRedrawItem.addActionListener(this);
+        createBondPopupMenu.add(createBondItem);
+        createBondPopupMenu.add(createBondRedrawItem);
+        disruptBondItem.addActionListener(this);
+        disruptBondRedrawItem.addActionListener(this);
+        disruptBondPopupMenu.add(disruptBondItem);
+        disruptBondPopupMenu.add(disruptBondRedrawItem);
+
     }
 
     public void initialise(MainApp mainapp) {
@@ -247,6 +274,10 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
     }
     double horizontalScale = 2.6;
     double verticalScale = 2.6;
+    int[] pairedSites = null;
+    int selectedNuc1 = -1;
+    int selectedNuc2 = -1;
+    StructureEdit edit = null;
 
     public void computeStructureToBeDrawn(Structure structure) {
         if (structure == null) {
@@ -254,7 +285,13 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         }
 
         //np = mainapp.getStructureCoordinates(structure.getDotBracketString());
-        np = NAView.naview_xy_coordinates(RNAFoldingTools.getPairedSitesFromDotBracketString(structure.getDotBracketString()));
+        pairedSites = RNAFoldingTools.getPairedSitesFromDotBracketString(structure.getDotBracketString());
+        edit = new StructureEdit(pairedSites);
+        computeStructureToBeDrawn(edit.pairedSites);
+    }
+
+    public void computeStructureToBeDrawn(int[] pairedSites) {
+        np = NAView.naview_xy_coordinates(pairedSites);
 
         minx = Double.MAX_VALUE;
         miny = Double.MAX_VALUE;
@@ -560,41 +597,27 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         if (structure == null || nucleotidePositions == null) {
             return;
         }
-       
+
         int panelWidth = (int) ((maxx - minx) * horizontalScale + xoffset * 2);
         int panelHeight = (int) ((maxy - miny) * verticalScale + 100);
         Dimension d = new Dimension((int) (panelWidth * zoomScale), (int) (panelHeight * zoomScale));
         /*
-        try {
-            if (d.width > 0 && d.height > 0) {
-                if ((bufferedImage == null || d.width != bufferedImage.getWidth() || d.height != bufferedImage.getHeight())) {
-                    bufferedImage = (BufferedImage) (this.createImage(d.width, d.height));
-                }
-            }
-        } catch (Exception ex) {
-            //System.out.println(ex);
-            JOptionPane.showMessageDialog(this.mainapp,
-                    ex.getMessage(),
-                    "Exception",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (Error e) {
-            JOptionPane.showMessageDialog(this.mainapp,
-                    e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (bufferedImage == null) {
-            return;
-        }
-        
-
-        g = (Graphics2D) bufferedImage.getGraphics();
-        //g = (Graphics2D) graphics;
-      
-        */
+         * try { if (d.width > 0 && d.height > 0) { if ((bufferedImage == null
+         * || d.width != bufferedImage.getWidth() || d.height !=
+         * bufferedImage.getHeight())) { bufferedImage = (BufferedImage)
+         * (this.createImage(d.width, d.height)); } } } catch (Exception ex) {
+         * //System.out.println(ex); JOptionPane.showMessageDialog(this.mainapp,
+         * ex.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE); return; }
+         * catch (Error e) { JOptionPane.showMessageDialog(this.mainapp,
+         * e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); return; }
+         *
+         * if (bufferedImage == null) { return; }
+         *
+         *
+         * g = (Graphics2D) bufferedImage.getGraphics(); //g = (Graphics2D)
+         * graphics;
+         *
+         */
         g = (Graphics2D) graphics;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.scale(zoomScale, zoomScale);
@@ -605,12 +628,16 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         // draw the base pair interactions
         if (mainapp.showBonds) {
             for (int i = 0; i < nucleotidePositions.length; i++) {
-                int a = structure.pairedSites[0][i] - structure.pairedSites[0][0];
-                int b = structure.pairedSites[1][i] - structure.pairedSites[0][0];
-                if (structure.pairedSites[0][i] < structure.pairedSites[1][i]) {
+                int a = i;
+                int b = edit.pairedSites[i] - 1;
+                if (i + 1 < edit.pairedSites[i]) {
                     Line2D bond = new Line2D.Double(nucleotidePositions[a], nucleotidePositions[b]);
                     g.setStroke(new BasicStroke(bondThickness));
+
                     g.setColor(bondColor);
+                    if ((selectedNuc1 == a && selectedNuc2 == b) || (selectedNuc1 == b && selectedNuc2 == a)) {
+                        g.setColor(Color.red);
+                    }
                     g.draw(bond);
                 }
             }
@@ -935,7 +962,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
         }
 
         if (useNativeDrawType) {
-            
+
             //drawStructureNative();
             return DRAW_NATIVE_GRAPHIC;
         }
@@ -1176,7 +1203,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
 
         setPreferredSize(new Dimension((int) Math.ceil(panelWidth * zoomScale), (int) Math.ceil(panelHeight * zoomScale)));
         revalidate();
-       // g.scale(zoomScale, zoomScale);
+        // g.scale(zoomScale, zoomScale);
         if (selectedNucleotide != -1) {
             g.setColor(Color.black);
             g.drawOval((int) posx - (nucleotideDiameter / 2), (int) posy - (nucleotideDiameter / 2), (int) (nucleotideDiameter), (int) (nucleotideDiameter));
@@ -1211,6 +1238,26 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
                 g.drawOval((int) nucleotidePositions[nucX].x - (nucleotideDiameter / 2), (int) nucleotidePositions[nucX].y - (nucleotideDiameter / 2), (int) (nucleotideDiameter), (int) (nucleotideDiameter));
             }
         }
+
+        g.setColor(Color.red);
+        g.setStroke(new BasicStroke((float) 4));
+        if (selectedNuc1 != -1) {
+            int nucX = selectedNuc1;
+            //System.out.println("DrawingNuc " + selectedNuc1 + "\t" + nucX);
+            if (nucX >= 0 && nucX < nucleotidePositions.length) {
+                //System.out.println("DrawingNuc2 " + selectedNuc1);
+                g.drawOval((int) nucleotidePositions[nucX].x - (nucleotideDiameter / 2), (int) nucleotidePositions[nucX].y - (nucleotideDiameter / 2), (int) (nucleotideDiameter), (int) (nucleotideDiameter));
+            }
+        }
+        if (selectedNuc2 != -1) {
+            int nucY = selectedNuc2;
+            if (nucY >= 0 && nucY < nucleotidePositions.length) {
+                g.drawOval((int) nucleotidePositions[nucY].x - (nucleotideDiameter / 2), (int) nucleotidePositions[nucY].y - (nucleotideDiameter / 2), (int) (nucleotideDiameter), (int) (nucleotideDiameter));
+            }
+        }
+
+        g.setColor(Color.black);
+        g.setStroke(new BasicStroke());
     }
     int startHighlightPosition = -1;
     int endHighlightPosition = -1;
@@ -1362,13 +1409,74 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
 
     public void mouseClicked(MouseEvent e) {
 
-        /*
-         * for(int i = 0 ; ; i++) { saveAsPNG(new
-         * File("c:/project/hepacivirus/images/hcv-"+(i+1)+".png"));
-         * mainapp.selected = (mainapp.selected + 1) %
-         * mainapp.directoryStructureFiles.size();
-         * mainapp.openStructure(mainapp.selected); }
-         */
+        if (selectedNuc1 != -1 && selectedNuc2 != -1) {
+            selectedNuc1 = -1;
+            selectedNuc2 = -1;
+        }
+
+        int minIndex = -1;
+        double minDistance = Double.MAX_VALUE;
+        for (int i = 0; i < nucleotidePositions.length; i++) {
+            Point2D.Double scaledPoint = new Point2D.Double(e.getPoint().x / zoomScale, e.getPoint().y / zoomScale);
+            double distance = nucleotidePositions[i].distance(scaledPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minIndex = i;
+            }
+        }
+
+
+
+        if (minDistance <= nucleotideDiameter / 2) {
+            if (selectedNuc1 == minIndex) {
+                selectedNuc1 = -1;
+            } else if (selectedNuc2 == minIndex) {
+                selectedNuc2 = -1;
+            } else if (selectedNuc1 == -1) {
+                selectedNuc1 = minIndex;
+            } else if (selectedNuc2 == -1) {
+                selectedNuc2 = minIndex;
+            }
+
+
+        } else {
+
+            double minDistanceFromBond = Double.MAX_VALUE;
+            int nuc1 = -1;
+            int nuc2 = -1;
+            for (int i = 0; i < nucleotidePositions.length; i++) {
+                int a = i;
+                int b = edit.pairedSites[i] - 1;
+                if (i + 1 < edit.pairedSites[i]) {
+                    Line2D bond = new Line2D.Double(nucleotidePositions[a], nucleotidePositions[b]);
+                    double dist = bond.ptLineDist(e.getPoint().x / zoomScale, e.getPoint().y / zoomScale);
+                    if (dist < minDistanceFromBond) {
+                        minDistanceFromBond = dist;
+                        nuc1 = a;
+                        nuc2 = b;
+                    }
+                }
+            }
+
+            if (minDistanceFromBond != Double.MAX_VALUE && minDistanceFromBond < 3) {
+                selectedNuc1 = nuc1;
+                selectedNuc2 = nuc2;
+            }
+            //System.out.println("MIN" + minDistanceFromBond);
+        }
+
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            //System.out.println("X" + selectedNuc1 + "\t" + selectedNuc2);
+            if (selectedNuc1 != -1 && selectedNuc2 != -1) {
+                if (edit.isBasePaired(selectedNuc1, selectedNuc2)) {
+                    this.disruptBondPopupMenu.show(this, e.getX(), e.getY());
+                } else {
+                    this.createBondPopupMenu.show(this, e.getX(), e.getY());
+                }
+            }
+        }
+
+        repaint();
     }
 
     public void mousePressed(MouseEvent e) {
@@ -1471,6 +1579,52 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
                 mainapp.numbering = 10;
             }
             redraw();
+        } else if (e.getSource().equals(disruptBondItem)) {
+            edit.makeSingleStranded(selectedNuc1);
+            edit.makeSingleStranded(selectedNuc2);
+            selectedNuc1 = -1;
+            selectedNuc2 = -1;
+            repaint();
+        } else if (e.getSource().equals(this.disruptBondRedrawItem)) {
+            edit.makeSingleStranded(selectedNuc1);
+            edit.makeSingleStranded(selectedNuc2);
+            this.computeStructureToBeDrawn(edit.pairedSites);
+            selectedNuc1 = -1;
+            selectedNuc2 = -1;
+            repaint();
+        } else if (e.getSource().equals(createBondItem)) {
+            if (edit.canMakeBasePair(selectedNuc1, selectedNuc2)) {
+                edit.makeBasePair(selectedNuc1, selectedNuc2);
+            } else {
+                JOptionPane.showMessageDialog(this, "This base-pairing is not possible as it does not result in a correct secondary structure.", "Illegal base-pairing", JOptionPane.WARNING_MESSAGE);
+            }
+            selectedNuc1 = -1;
+            selectedNuc2 = -1;
+            repaint();
+        } else if (e.getSource().equals(createBondRedrawItem)) {
+            if (edit.canMakeBasePair(selectedNuc1, selectedNuc2)) {
+                edit.makeBasePair(selectedNuc1, selectedNuc2);
+            } else {
+                JOptionPane.showMessageDialog(this, "This base-pairing is not possible as it does not result in a correct secondary structure.", "Illegal base-pairing", JOptionPane.WARNING_MESSAGE);
+            }
+            this.computeStructureToBeDrawn(edit.pairedSites);
+            selectedNuc1 = -1;
+            selectedNuc2 = -1;
+            repaint();
+        } else if (e.getSource().equals(redrawStructureItem)) {
+            this.computeStructureToBeDrawn(edit.pairedSites);
+            selectedNuc1 = -1;
+            selectedNuc2 = -1;
+            repaint();
+        } else if (e.getSource().equals(resetStructureItem)) {
+            int n = JOptionPane.showConfirmDialog(mainapp,
+            "This will reset your edits, are you sure you want to continue?",
+            "Warning",
+            JOptionPane.YES_NO_OPTION);
+            if(n == JOptionPane.YES_OPTION)
+            {
+                edit.reset();
+            }
         } else {
             // else zoom levels
             for (int i = 0; i < zoomLevels.length; i++) {
@@ -1497,17 +1651,18 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
 
         if (prevZoomScale != zoomScale) {
 
+            customZoomLevelItem.setSelected(true);
             Rectangle visible = getVisibleRect();
             double currentCenterX = visible.x + (visible.width / 2);
             double currentCenterY = visible.y + (visible.height / 2);
-            System.out.println(visible+"\t"+getViewCenter());
+            //System.out.println(visible + "\t" + getViewCenter());
             drawComplexStructure();
             redraw();
             Rectangle newVisible = getVisibleRect();
             double newLeftX = currentCenterX - (newVisible.width / 2);
             double newLeftY = currentCenterX - (newVisible.height / 2);
-            System.out.println(newVisible+"\t"+getViewCenter());
-            System.out.println("Centers" + currentCenterX + "\t" + currentCenterY + "\t" + newLeftX + "\t" + newLeftY);
+            //System.out.println(newVisible + "\t" + getViewCenter());
+            //System.out.println("Centers" + currentCenterX + "\t" + currentCenterY + "\t" + newLeftX + "\t" + newLeftY);
             //System.out.println("Center"+newLeftX+"\t"+newLeftY);
             mainapp.substructureScrollPane.getViewport().setViewPosition(new Point((int) newLeftX, (int) newLeftY));
         }
