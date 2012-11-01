@@ -641,6 +641,17 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
                     g.draw(bond);
                 }
             }
+            if(selectedNuc1 != -1 && selectedNuc2 != -1 )
+            {
+                 Line2D bond = new Line2D.Double(nucleotidePositions[selectedNuc1], nucleotidePositions[selectedNuc2]);
+                 
+                  float dash[] = { 10.0f };
+                  g.setStroke(new BasicStroke(bondThickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
+                         
+                 g.setColor(Color.red);
+                 g.draw(bond);
+            }
+            
         }
 
 

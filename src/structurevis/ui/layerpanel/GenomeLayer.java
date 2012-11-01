@@ -393,7 +393,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
     }
 
     public void mouseExited(MouseEvent e) {
-        structures = null;
+        //structures = null;
         mouseoverStart = -1;
         mouseoverEnd = -1;
         repaint();
