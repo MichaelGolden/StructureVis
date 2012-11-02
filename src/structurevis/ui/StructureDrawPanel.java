@@ -641,17 +641,16 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
                     g.draw(bond);
                 }
             }
-            if(selectedNuc1 != -1 && selectedNuc2 != -1 )
-            {
-                 Line2D bond = new Line2D.Double(nucleotidePositions[selectedNuc1], nucleotidePositions[selectedNuc2]);
-                 
-                  float dash[] = { 10.0f };
-                  g.setStroke(new BasicStroke(bondThickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
-                         
-                 g.setColor(Color.red);
-                 g.draw(bond);
+            if (selectedNuc1 != -1 && selectedNuc2 != -1) {
+                Line2D bond = new Line2D.Double(nucleotidePositions[selectedNuc1], nucleotidePositions[selectedNuc2]);
+
+                float dash[] = {10.0f};
+                g.setStroke(new BasicStroke(bondThickness, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f));
+
+                g.setColor(Color.red);
+                g.draw(bond);
             }
-            
+
         }
 
 
@@ -758,6 +757,8 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
                 g.fill(stemNucleotide);
             }
 
+            
+            g.setStroke(new BasicStroke());
             g.setColor(Color.black);
             g.draw(stemNucleotide);
             g.setStroke(new BasicStroke());
@@ -1607,7 +1608,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             if (edit.canMakeBasePair(selectedNuc1, selectedNuc2)) {
                 edit.makeBasePair(selectedNuc1, selectedNuc2);
             } else {
-                JOptionPane.showMessageDialog(this, "This base-pairing is not possible as it does not result in a correct secondary structure.", "Illegal base-pairing", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(mainapp, "This base-pairing is not possible as it does not result in a correct secondary structure.", "Illegal base-pairing", JOptionPane.WARNING_MESSAGE);
             }
             selectedNuc1 = -1;
             selectedNuc2 = -1;
@@ -1616,7 +1617,7 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             if (edit.canMakeBasePair(selectedNuc1, selectedNuc2)) {
                 edit.makeBasePair(selectedNuc1, selectedNuc2);
             } else {
-                JOptionPane.showMessageDialog(this, "This base-pairing is not possible as it does not result in a correct secondary structure.", "Illegal base-pairing", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(mainapp, "This base-pairing is not possible as it does not result in a correct secondary structure.", "Illegal base-pairing", JOptionPane.WARNING_MESSAGE);
             }
             this.computeStructureToBeDrawn(edit.pairedSites);
             selectedNuc1 = -1;
@@ -1629,11 +1630,10 @@ public class StructureDrawPanel extends JPanel implements ActionListener, MouseL
             repaint();
         } else if (e.getSource().equals(resetStructureItem)) {
             int n = JOptionPane.showConfirmDialog(mainapp,
-            "This will reset your edits, are you sure you want to continue?",
-            "Warning",
-            JOptionPane.YES_NO_OPTION);
-            if(n == JOptionPane.YES_OPTION)
-            {
+                    "This will reset your edits, are you sure you want to continue?",
+                    "Warning",
+                    JOptionPane.YES_NO_OPTION);
+            if (n == JOptionPane.YES_OPTION) {
                 edit.reset();
             }
         } else {

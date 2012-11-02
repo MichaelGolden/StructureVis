@@ -47,8 +47,11 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
     int[] tickMarkPossibilities = {1, 5, 10, 15, 20, 25, 50, 75, 100, 200, 250, 500, 750, 1500, 2000};
     Structure selected = null;
     ArrayList<Structure> structures = null;
+  //  ArrayList<Structure> structures2 = null;
     ArrayList<StructureAndMouseoverRegion> structurePositions = null;
-
+    ArrayList<StructureAndMouseoverRegion> structurePositions2 = null;
+   Structure selected2 = null;
+    
     public GenomeLayer(LayerPanel layerPanel, GenomeOrganization genomeStructure, String name) {
         super(layerPanel, name);
         setGenomeOrganization(genomeStructure);
@@ -232,10 +235,25 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
         }
 
         g2.drawImage(bufferedImage, 0, 0, this);
+        
+        if(structurePositions2 != null)
+        {
+              for (int i = 0; i < structurePositions2.size(); i++) {
+
+                Color blockColor = new Color(150, 150, 150, 100);
+                if (structurePositions2.get(i).structure.equals(selected2)) {
+                    blockColor = new Color(10, 255, 10, 100);
+                    //selectedRect = structurePositions.get(i);
+                }
+                g2.setColor(blockColor);
+                g2.fill(structurePositions2.get(i).rectangle);
+                
+                g2.setColor(Color.GRAY);
+                
+            }
+        }
 
         if (structures != null && structurePositions != null) {
-
-
            /* StructureAndMouseoverRegion selectedRect = null;
             if (structurePositions.size() > 0) {
                 selectedRect = structurePositions.get(0);
@@ -292,7 +310,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
             double regionWidth = (mouseoverLength / (double) layerPanel.genomeLength) * getWidth();
             double x = (mouseoverStart / (double) layerPanel.genomeLength) * getWidth();
             g2.setColor(new Color(0, 0, 0, 125));
-            Rectangle2D rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0, regionWidth, getHeight() - rulerHeight - 1);
+            Rectangle2D rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0  - 3, regionWidth, 3 + getHeight() - rulerHeight - 1);
             g2.draw(rect);
 
             // wrap around
@@ -301,7 +319,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
                 regionWidth = (mouseoverLength / (double) layerPanel.genomeLength) * getWidth();
                 x = 0;
                 g2.setColor(new Color(125, 125, 125, 125));
-                rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0, regionWidth, getHeight() - rulerHeight - 1);
+                rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0 - 3, regionWidth, 3 + getHeight() - rulerHeight - 1);
                 g2.draw(rect);
             }
         }
@@ -312,7 +330,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
             double regionWidth = (mouseoverLength / (double) layerPanel.genomeLength) * getWidth();
             double x = (selectedStart / (double) layerPanel.genomeLength) * getWidth();
             g2.setColor(Color.RED);
-            Rectangle2D rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0, regionWidth, getHeight() - rulerHeight - 1);
+            Rectangle2D rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0  - 3, regionWidth, 3 + getHeight() - rulerHeight - 1);
             g2.draw(rect);
 
             // wrap around
@@ -321,7 +339,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
                 regionWidth = (mouseoverLength / (double) layerPanel.genomeLength) * getWidth();
                 x = 0;
                 g2.setColor(Color.RED);
-                rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0, regionWidth, getHeight() - rulerHeight - 1);
+                rect = new Rectangle2D.Double(x + xoffset, rulerHeight + 0  - 3, regionWidth, 3 + getHeight() - rulerHeight - 1);
                 g2.draw(rect);
             }
         }
@@ -343,6 +361,8 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
 
     public void mouseClicked(MouseEvent e) {
         if (this.isEnabled()) {
+            structurePositions2 = (ArrayList<StructureAndMouseoverRegion>) structurePositions.clone();
+            selected2 = selected;
             if (selected != null) {
                 layerPanel.mainapp.openStructure(selected);
             } else {
@@ -393,7 +413,7 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
     }
 
     public void mouseExited(MouseEvent e) {
-        //structures = null;
+        structures = null;
         mouseoverStart = -1;
         mouseoverEnd = -1;
         repaint();
@@ -471,14 +491,12 @@ public class GenomeLayer extends GeneralLayer implements ActionListener, MouseLi
                 System.out.println(i+"\t"+dist+"\t"+level+"\t"+rect);
                 if (dist < minDistance) {
                 } else {
-                    System.out.println("break");
                     break;
                 }
             }
             System.out.println(rectLevel);
             level = Math.max(level, rectLevel);
             rect.setRect(x + xoffset, rulerHeight + rectLevel * h, regionWidth, h);
-            System.out.println("**"+rectLevel+"\t"+rect);
             rectangles.add(new StructureAndMouseoverRegion(structures.get(i), rect, rectLevel));
 
             /*
